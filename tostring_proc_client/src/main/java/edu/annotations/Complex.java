@@ -12,11 +12,11 @@ public class Complex {
         this.imag = imag;
     }
 
-    @ToString public int getReal() {
+    @ToString(includeName = true) public int getReal() {
         return real;
     }
 
-    @ToString public int getImag() {
+    @ToString(includeName = true) public int getImag() {
         return imag;
     }
 

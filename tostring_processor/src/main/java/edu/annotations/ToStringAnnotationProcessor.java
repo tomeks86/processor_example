@@ -55,7 +55,10 @@ public class ToStringAnnotationProcessor extends AbstractProcessor {
         out.printf("    public static String toString(%s obj) {\n", className);
         out.println("        StringBuilder result = new StringBuilder();");
         ToString ann = te.getAnnotation(ToString.class);
-        out.println("        result.append(\"[\");");
+        if (ann.includeName())
+            out.printf("        result.append(\"%s[\");\n", className);
+        else
+            out.println("        result.append(\"[\");");
         boolean first = true;
         for (Element element : te.getEnclosedElements()) {
             String methodName = element.getSimpleName().toString();
@@ -65,6 +68,10 @@ public class ToStringAnnotationProcessor extends AbstractProcessor {
                     first = false;
                 else
                     out.println("        result.append(\", \");");
+                if (ann.includeName()) {
+                    String fieldName = Introspector.decapitalize(methodName.replaceAll("^(get|is)", ""));
+                    out.printf("        result.append(\"%s=\");\n", fieldName);
+                }
                 out.printf("        result.append(toString(obj.%s()));\n", methodName);
             }
         }

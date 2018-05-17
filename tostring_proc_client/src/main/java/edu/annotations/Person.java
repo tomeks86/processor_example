@@ -10,12 +10,12 @@ public class Person {
         this.age = age;
     }
 
-    @ToString
+    @ToString(includeName = false)
     public String getName() {
         return name;
     }
 
-    @ToString
+    @ToString(includeName = false)
     public int getAge() {
         return age;
     }
